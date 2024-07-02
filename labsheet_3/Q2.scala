@@ -1,4 +1,4 @@
-object Q1{
+object Q2{
 
 def filterLongStrings(strings: List[String]): List[String] = {
   strings.filter(_.length > 5)

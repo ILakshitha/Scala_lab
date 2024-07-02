@@ -1,11 +1,14 @@
 object StringReverser {
   def reverseString(str: String): String = {
     if (str.isEmpty) ""
-    else reverseString(str.substring(1)) + str.charAt(0)
+    else reverseString(str.tail) + str.head
   }
 
   def main(args: Array[String]): Unit = {
-    val input = "hello"
+    
+    //println("Enter string")
+
+    val input = "Ishan"
     val reversed = reverseString(input)
     println(s"Reversed string: $reversed")
   }
