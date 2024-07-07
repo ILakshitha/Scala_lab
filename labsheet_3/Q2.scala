@@ -6,9 +6,9 @@ def filterLongStrings(strings: List[String]): List[String] = {
 
 def main(args:Array[String])={
   
-val inputList = List("Scala", "programming", "is", "fun", "and", "educational")
+val inputList = List("Ishan", "Lakshitha", "mahesh", "isuru", "asd", "bodima")
 val result = filterLongStrings(inputList)
-println(result)  // Output: List(programming, educational)
+println(result)
 }
 
 }
