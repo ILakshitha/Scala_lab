@@ -2,7 +2,7 @@ object InvetoryManagement{
     def displayInvetory(itemName:Array[String],itemQuantities:Array[Int])={
         println("Inventory:");
 
-        for( i<- itemName.length){
+        for( i <- itemName.indices){
             println(s"${itemName(i)}: ${itemQuantities(i)}")
         }
     }
