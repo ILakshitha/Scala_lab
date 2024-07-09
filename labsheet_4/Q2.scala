@@ -1,22 +1,21 @@
 object PatternMatchingExample {
+  def identifynum(): Unit = {
+    println("Input a number:")
+    
+
+      val input = scala.io.StdIn.readLine().toInt
+
+      if (input <= 0) {
+        println("Negative or Zero")
+      } else if (input % 2 == 0) {
+        println("Even number")
+      } else {
+        println("Odd number")
+      }
+    
+  }
+
   def main(args: Array[String]): Unit = {
-    if (args.length != 1) {
-      println("Please provide exactly one integer as input.")
-      return
-    }
-
-    val input = try {
-      args(0).toInt
-    } catch {
-      case _: NumberFormatException =>
-        println("Please provide a valid integer.")
-        return
-    }
-
-    input match {
-      case n if n <= 0 => println("Negative/Zero is input")
-      case n if n % 2 == 0 => println("Even number is given")
-      case _ => println("Odd number is given")
-    }
+    identifynum()
   }
 }
