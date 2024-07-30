@@ -1,68 +1,74 @@
-object InventoryManagement {
 
-  // Type alias for product details
-  type ProductDetails = (String, Int, Double) // (name, quantity, price)
+def getAllProductNames(inventory: Map[Int, (String, Int, Double)]): List[String] = {
+      inventory.values.map(_._1).toList
+    }
 
-  // Sample inventories
-  val inventory1: Map[Int, ProductDetails] = Map(
-    101 -> ("Product A", 10, 99.99),
-    102 -> ("Product B", 5, 149.99),
-    103 -> ("Product C", 20, 79.99)
-  )
 
-  val inventory2: Map[Int, ProductDetails] = Map(
-    102 -> ("Product B", 10, 139.99),
-    104 -> ("Product D", 15, 199.99)
-  )
+def calculateTotalValue(inventory: Map[Int, (String, Int, Double)]): Double = {
+      inventory.values.map { case (_, quantity, price) => quantity * price }.sum
+    }
 
-  // I. Retrieve all product names from inventory1
-  def getAllProductNames(inventory: Map[Int, ProductDetails]): List[String] = {
-    inventory.values.map(_._1).toList
+
+def isInventoryEmpty(inventory: Map[Int, (String, Int, Double)]): Boolean = {
+      inventory.isEmpty
+    }
+
+
+def mergeInventories(inventory1: Map[Int, (String, Int, Double)], inventory2: Map[Int, (String, Int, Double)]): Map[Int, (String, Int, Double)] = {
+
+  var mergedInventory = Map[Int, (String, Int, Double)]()
+
+
+  for ((id, (name, quantity, price)) <- inventory1) {
+    mergedInventory += (id -> (name, quantity, price))
   }
 
-  // II. Calculate the total value of all products in inventory1
-  def calculateTotalValue(inventory: Map[Int, ProductDetails]): Double = {
-    inventory.values.map { case (_, quantity, price) => quantity * price }.sum
-  }
-
-  // III. Check if inventory1 is empty
-  def isInventoryEmpty(inventory: Map[Int, ProductDetails]): Boolean = {
-    inventory.isEmpty
-  }
-
-  // IV. Merge inventory1 and inventory2, updating quantities and retaining the highest price
-  def mergeInventories(inv1: Map[Int, ProductDetails], inv2: Map[Int, ProductDetails]): Map[Int, ProductDetails] = {
-    inv2.foldLeft(inv1) { case (acc, (id, (name, quantity, price))) =>
-      acc.get(id) match {
-        case Some((existingName, existingQuantity, existingPrice)) =>
-          acc.updated(id, (existingName, existingQuantity + quantity, math.max(existingPrice, price)))
-        case None =>
-          acc.updated(id, (name, quantity, price))
-      }
+  
+  for ((id, (name2, quantity2, price2)) <- inventory2) {
+    if (mergedInventory.contains(id)) {
+  
+      val (name1, quantity1, price1) = mergedInventory(id)
+      val updatedQuantity = quantity1 + quantity2
+      val updatedPrice = price1 max price2
+      mergedInventory += (id -> (name1, updatedQuantity, updatedPrice))
+    } else {
+ 
+      mergedInventory += (id -> (name2, quantity2, price2))
     }
   }
 
-  // V. Check if a product with a specific ID (e.g., 102) exists and print its details
-  def checkAndPrintProductDetails(inventory: Map[Int, ProductDetails], productId: Int): Unit = {
-    inventory.get(productId) match {
-      case Some((name, quantity, price)) =>
-        println(s"Product ID: $productId, Name: $name, Quantity: $quantity, Price: $price")
-      case None =>
-        println(s"Product ID: $productId does not exist in the inventory.")
-    }
-  }
+  mergedInventory
+}
 
-  // Main function to demonstrate the operations
-  def main(args: Array[String]): Unit = {
-    println("All product names in inventory1: " + getAllProductNames(inventory1))
-    println("Total value of all products in inventory1: $" + calculateTotalValue(inventory1))
-    println("Is inventory1 empty? " + isInventoryEmpty(inventory1))
-
-    val mergedInventory = mergeInventories(inventory1, inventory2)
-    println("Merged inventory: " + mergedInventory)
-
-    checkAndPrintProductDetails(inventory1, 102)
+def checkProductExistence(inventory: Map[Int, (String, Int, Double)], productId: Int): Unit = {
+ 
+  inventory.get(productId) match {
+    
+    case Some((name, quantity, price)) =>
+      println(s"Product ID: $productId, Name: $name, Quantity: $quantity, Price: $price")
+    
+    case None =>
+      println(s"Product with ID $productId does not exist.")
   }
 }
 
-InventoryManagement.main(Array())
+
+def main(args: Array[String]): Unit = {
+    val inventory1: Map[Int, (String, Int, Double)] = Map(
+      101 -> ("ProductA", 10, 50.0),
+      102 -> ("ProductB", 5, 30.0),
+      103 -> ("ProductC", 20, 15.0)
+    )
+    
+    val inventory2: Map[Int, (String, Int, Double)] = Map(
+      102 -> ("ProductB", 10, 35.0),
+      104 -> ("ProductD", 15, 25.0)
+    )
+
+    println(getAllProductNames(inventory1)) 
+     println(calculateTotalValue(inventory1)) 
+     println(isInventoryEmpty(inventory1)) 
+     println(mergeInventories(inventory1,inventory2)) 
+    println(checkProductExistence(inventory1,102)) 
+    
+}
