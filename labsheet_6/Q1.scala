@@ -56,12 +56,12 @@ def checkProductExistence(inventory: Map[Int, (String, Int, Double)], productId:
 def main(args: Array[String]): Unit = {
     val inventory1: Map[Int, (String, Int, Double)] = Map(
       101 -> ("ProductA", 10, 50.0),
-      102 -> ("ProductB", 5, 30.0),
+      102 -> ("ProductB", 5, 40.0),
       103 -> ("ProductC", 20, 15.0)
     )
     
     val inventory2: Map[Int, (String, Int, Double)] = Map(
-      102 -> ("ProductB", 10, 35.0),
+      105 -> ("ProductB", 10, 35.0),
       104 -> ("ProductD", 15, 25.0)
     )
 
@@ -69,6 +69,6 @@ def main(args: Array[String]): Unit = {
      println(calculateTotalValue(inventory1)) 
      println(isInventoryEmpty(inventory1)) 
      println(mergeInventories(inventory1,inventory2)) 
-    println(checkProductExistence(inventory1,102)) 
+    println(checkProductExistence(inventory1,103)) 
     
 }
