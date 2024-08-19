@@ -30,7 +30,7 @@ def caesarCipher(text: String, shift: Int, mode: String): String = {
 
 def main(args: Array[String]): Unit = {
 
-  val plaintext = "abc"
+  val plaintext = "123"
   val shift = 3
 
 // Encrypt the plaintext
